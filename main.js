@@ -1,5 +1,16 @@
-// Initialize API Key
-const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+// Initialize API Key safely for both Local (Vite) and GitHub Pages
+let apiKey = null;
+try {
+  if (import.meta && import.meta.env && import.meta.env.VITE_GEMINI_API_KEY) {
+    apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+  }
+} catch (e) {
+  console.log("Not running in Vite environment");
+}
+
+if (!apiKey || apiKey === 'your_api_key_here') {
+  apiKey = prompt("🔒 เนื่องจากรันบนเว็บ กรุณาใส่ Gemini API Key ของคุณเพื่อใช้งานแชทบอท:\n(Key จะไม่ถูกบันทึกไว้ที่ไหน ปลอดภัยแน่นอน)");
+}
 
 const SYSTEM_PROMPT = `คุณคือพนักงานเซเว่น (7-Eleven) ที่มีคาแรคเตอร์เป็น 'แร็ปเปอร์' (Rapper) ใต้ดิน
 กฎการสนทนา:
@@ -11,10 +22,6 @@ const SYSTEM_PROMPT = `คุณคือพนักงานเซเว่น
 
 // เก็บประวัติแชท
 let chatHistory = [];
-
-if (!apiKey || apiKey === 'your_api_key_here') {
-  alert('โย่ว! เจ้านาย! อย่าลืมใส่ VITE_GEMINI_API_KEY ในไฟล์ .env แล้ว restart เซิร์ฟเวอร์นะโบร!');
-}
 
 // DOM Elements
 const chatBox = document.getElementById('chatBox');
