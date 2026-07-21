@@ -1,15 +1,11 @@
 // Initialize API Key safely for both Local (Vite) and GitHub Pages
-let apiKey = null;
+let envApiKey = null;
 try {
   if (import.meta && import.meta.env && import.meta.env.VITE_GEMINI_API_KEY) {
-    apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+    envApiKey = import.meta.env.VITE_GEMINI_API_KEY;
   }
 } catch (e) {
   console.log("Not running in Vite environment");
-}
-
-if (!apiKey || apiKey === 'your_api_key_here') {
-  apiKey = prompt("🔒 เนื่องจากรันบนเว็บ กรุณาใส่ Gemini API Key ของคุณเพื่อใช้งานแชทบอท:\n(Key จะไม่ถูกบันทึกไว้ที่ไหน ปลอดภัยแน่นอน)");
 }
 
 const SYSTEM_PROMPT = `คุณคือพนักงานเซเว่น (7-Eleven) ที่มีคาแรคเตอร์เป็น 'แร็ปเปอร์' (Rapper) ใต้ดิน
@@ -27,9 +23,22 @@ let chatHistory = [];
 const chatBox = document.getElementById('chatBox');
 const userInput = document.getElementById('userInput');
 const sendBtn = document.getElementById('sendBtn');
+const apiKeyInput = document.getElementById('apiKeyInput');
+
+// Auto-fill API Key if running locally with Vite
+if (envApiKey && envApiKey !== 'your_api_key_here') {
+  apiKeyInput.value = envApiKey;
+}
 
 // Send Message Function
 async function sendMessage() {
+  const currentApiKey = apiKeyInput.value.trim();
+  
+  if (!currentApiKey) {
+    addMessageToUI('⚠️ กรุณาใส่ API Key ในช่องด้านบนก่อนส่งข้อความนะฮะ~', 'bot');
+    return;
+  }
+
   const text = userInput.value.trim();
   if (!text) return;
 
@@ -51,7 +60,7 @@ async function sendMessage() {
   chatBox.scrollTop = chatBox.scrollHeight;
 
   try {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${apiKey}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${currentApiKey}`;
     
     const response = await fetch(url, {
       method: 'POST',
