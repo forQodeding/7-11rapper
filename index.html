@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>น้องเซเว่น 7-11 Bot 🏪✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="app-header">
+        <div class="logo-container">
+          <div class="neon-sign">7-ELEVEN</div>
+          <div class="neon-sub">CUTE BOY</div>
+        </div>
+        <h1>น้องแร็ปเปอร์ 7-11 👦🏻</h1>
+        <p class="subtitle">"รับขนมจีบซาลาเปาเพิ่มมั้ยฮะพี่ชาย~"</p>
+      </header>
+
+      <main class="chat-container">
+        <div class="chat-box" id="chatBox">
+          <div class="message bot">
+            <div class="avatar">
+              <img src="https://api.dicebear.com/7.x/notionists/svg?seed=Felix" alt="Bot" />
+            </div>
+            <div class="bubble">
+              โย่ว! สวัสดีฮะพี่ชาย แอร์เย็นๆ สบายๆ รับอะไรดีฮะเจ้านาย!
+            </div>
+          </div>
+        </div>
+
+        <div class="input-container">
+          <input type="text" id="userInput" placeholder="พิมพ์คุยกับพนักงานเซเว่น..." autocomplete="off" />
+          <button id="sendBtn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          </button>
+        </div>
+      </main>
+    </div>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
